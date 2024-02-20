@@ -36,5 +36,6 @@ public class RobotMap {
 
 // below has always been zero, regardless of what else is plugged in
     public static int xboxUSB = 0;
+    public static int joystickUSB = 1;
 
 }
