@@ -205,15 +205,18 @@ import frc.robot.subsystems.*;
    
     TankDrive.drive.tankDrive(TankDrive.getLeftDriveSpeed(), TankDrive.getRightDriveSpeed());
     Shooter.shooterTalonPrimary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed());
-    if (Math.abs(Shooter.shooterTalonPrimary.get()) > 0) {
+    if (Math.abs(Shooter.getShooterSpeed()) > 0) {
       if (shooterTimer.get() > 0) {
         if(shooterTimer.get() > 1) {
           Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed());
-          shooterTimer.reset();
         }
       } else {
         shooterTimer.restart();
       }
+      System.out.println(shooterTimer.get());
+    } else {
+      Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, 0);
+      shooterTimer.reset();
     }
   
   }

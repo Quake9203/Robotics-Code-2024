@@ -31,7 +31,7 @@ public class RobotMap {
     // new 2024
     public static int shooterTalonPrimaryCAN = 6;
     public static int shooterTalonSecondaryCAN = 5;
-    public static int __extraMotor__ = 7;
+    public static int grabberTalonCAN = 7;
 
 
 // below has always been zero, regardless of what else is plugged in
