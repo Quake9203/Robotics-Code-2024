@@ -11,9 +11,9 @@ public class Grabber {
     public static double getGrabberDirection() {
 
         if (OI.xbox.getRightBumper()) {
-            return 1;
+            return 0.4;
         } else if (OI.xbox.getLeftBumper()) {
-            return -1;
+            return -0.4;
         } else {
             return 0;
         }

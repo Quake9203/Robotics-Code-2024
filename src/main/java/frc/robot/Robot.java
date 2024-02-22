@@ -204,21 +204,26 @@ import frc.robot.subsystems.*;
   public void teleopPeriodic() {
    
     TankDrive.drive.tankDrive(TankDrive.getLeftDriveSpeed(), TankDrive.getRightDriveSpeed());
+    
     Shooter.shooterTalonPrimary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed());
-    if (Math.abs(Shooter.getShooterSpeed()) > 0) {
+    if (Shooter.getShooterSpeed() < 0) {
       if (shooterTimer.get() > 0) {
-        if(shooterTimer.get() > 1) {
-          Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed());
+        if(shooterTimer.get() > 0.6) {
+          Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed() * 0.75);
         }
       } else {
         shooterTimer.restart();
       }
       System.out.println(shooterTimer.get());
+    } else if (Shooter.getShooterSpeed() > 0) {
+      Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed());
     } else {
       Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, 0);
       shooterTimer.reset();
     }
-  
+
+    Grabber.grabberTalon.set(TalonSRXControlMode.PercentOutput, Grabber.getGrabberDirection());
+
   }
 
   /**
