@@ -10,6 +10,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 
 
@@ -129,64 +130,73 @@ import frc.robot.subsystems.*;
    // use autoSelected
     switch (m_autoSelected) {
       case kCustomAuto:
-        // Put custom auto code here
         final double matchTime1 = autoTimer.get();
-        double leftAutoSpeedClimb = 0.6695;
-        double rightAutoSpeedClimb = -0.65; // a constant speed diff between right and left motors
-        
-        double leftAutoSpeed1 = 0.515;
-        double rightAutoSpeed1 = -0.5; // a constant speed diff between right and left motors
-        double yaw = gyro.getAngle();
-        double cmdYaw = yaw * 0.05;
-
-// Gyro balancing code. Feedback loop. A is a parameter of the feedback
-        if (matchTime1 <= 1.9) {
-          TankDrive.drive.tankDrive(leftAutoSpeedClimb - cmdYaw, rightAutoSpeedClimb - cmdYaw);
-        } else if (matchTime1 <= 4.3) {
-          TankDrive.drive.tankDrive(leftAutoSpeed1 - cmdYaw, rightAutoSpeed1 - cmdYaw);
-        } else {
-          double a = 0.85;
-          if (matchTime1 >= 8.5) {
-            a = 0.88;
-          }
-          double ay = oldGyro * a + accel.getY() * (1 - a);
-
-          oldGyro = ay;
-          double cmd = -ay * 2.7;
-          double limit = 0.55;
-          if (matchTime1 >= 9) {
-            limit = 0.3;
-          }
-          
-          if (cmd > limit) {
-            cmd = limit;
-          } else if (cmd < -limit) {
-            cmd = -limit;
-          }
-          TankDrive.drive.tankDrive(cmd, -cmd);
+        if (matchTime1 <= 1) {
+          Shooter.shooterTalonPrimary.set(ControlMode.PercentOutput, 1);
+        } else if (matchTime1 <= 1.5) {
+          Shooter.shooterTalonPrimary.set(ControlMode.PercentOutput, 1);
+          Shooter.shooterTalonSecondary.set(ControlMode.PercentOutput, .5);
+        } else if (matchTime1 <= 3.0) {
+          TankDrive.drive.tankDrive(0.4, 0.4);    
         }
-        break;
+//         // Put custom auto code here
+//         final double matchTime1 = autoTimer.get();
+//         double leftAutoSpeedClimb = 0.6695;
+//         double rightAutoSpeedClimb = -0.65; // a constant speed diff between right and left motors
+        
+//         double leftAutoSpeed1 = 0.515;
+//         double rightAutoSpeed1 = -0.5; // a constant speed diff between right and left motors
+//         double yaw = gyro.getAngle();
+//         double cmdYaw = yaw * 0.05;
+
+// // Gyro balancing code. Feedback loop. A is a parameter of the feedback
+//         if (matchTime1 <= 1.9) {
+//           TankDrive.drive.tankDrive(leftAutoSpeedClimb - cmdYaw, rightAutoSpeedClimb - cmdYaw);
+//         } else if (matchTime1 <= 4.3) {
+//           TankDrive.drive.tankDrive(leftAutoSpeed1 - cmdYaw, rightAutoSpeed1 - cmdYaw);
+//         } else {
+//           double a = 0.85;
+//           if (matchTime1 >= 8.5) {
+//             a = 0.88;
+//           }
+//           double ay = oldGyro * a + accel.getY() * (1 - a);
+
+//           oldGyro = ay;
+//           double cmd = -ay * 2.7;
+//           double limit = 0.55;
+//           if (matchTime1 >= 9) {
+//             limit = 0.3;
+//           }
+          
+//           if (cmd > limit) {
+//             cmd = limit;
+//           } else if (cmd < -limit) {
+//             cmd = -limit;
+//           }
+//           TankDrive.drive.tankDrive(cmd, -cmd);
+//         }
+//         break;
       case kDefaultAuto:
       default:
-        // Put default auto code here
-        final double matchTime = autoTimer.get();
-        double leftAutoSpeed = 0.515;
-        double rightAutoSpeed = -0.4875; // a constant speed diff between right and left motors
-        double yaw1 = gyro.getAngle();
-        double cmdYaw1 = yaw1 * 0.05;
+        // // Put default auto code here
+        // final double matchTime = autoTimer.get();
+        // double leftAutoSpeed = 0.515;
+        // double rightAutoSpeed = -0.4875; // a constant speed diff between right and left motors
+        // double yaw1 = gyro.getAngle();
+        // double cmdYaw1 = yaw1 * 0.05;
         
-        if (matchTime <= 8.2) {
-          TankDrive.drive.tankDrive(leftAutoSpeed - cmdYaw1, rightAutoSpeed - cmdYaw1);
-          // if (matchTime <= 1.5) {
-          // frc.robot.subsystems.Elevator.elevatorVictorMaster.set(ControlMode.PercentOutput, 0.3);
-          // } else {
-          // frc.robot.subsystems.Elevator.elevatorVictorMaster.set(ControlMode.PercentOutput, 0.075);
-          // }
-        }
-        // frc.robot.subsystems.Lift.liftVictorMaster.set(ControlMode.PercentOutput, 0.75);
-        // frc.robot.subsystems.Shooter.shooterVictorSPX.set(ControlMode.PercentOutput, -1);
-        // frc.robot.subsystems.Shooter.shooterVictorMaster.set(ControlMode.PercentOutput, -1);
-        break;
+        // if (matchTime <= 8.2) {
+        //   TankDrive.drive.tankDrive(leftAutoSpeed - cmdYaw1, rightAutoSpeed - cmdYaw1);
+        //   // if (matchTime <= 1.5) {
+        //   // frc.robot.subsystems.Elevator.elevatorVictorMaster.set(ControlMode.PercentOutput, 0.3);
+        //   // } else {
+        //   // frc.robot.subsystems.Elevator.elevatorVictorMaster.set(ControlMode.PercentOutput, 0.075);
+        //   // }
+        // }
+        // // frc.robot.subsystems.Lift.liftVictorMaster.set(ControlMode.PercentOutput, 0.75);
+        // // frc.robot.subsystems.Shooter.shooterVictorSPX.set(ControlMode.PercentOutput, -1);
+        // // frc.robot.subsystems.Shooter.shooterVictorMaster.set(ControlMode.PercentOutput, -1);
+        // break;
     }
   }
 
@@ -206,7 +216,7 @@ import frc.robot.subsystems.*;
     TankDrive.drive.tankDrive(TankDrive.getLeftDriveSpeed(), TankDrive.getRightDriveSpeed());
     
     Shooter.shooterTalonPrimary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed());
-    if (Shooter.getShooterSpeed() < 0) {
+    if (Shooter.getShooterSpeed() > 0) {
       if (shooterTimer.get() > 0) {
         if(shooterTimer.get() > 0.6) {
           Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed() * 0.75);
@@ -215,7 +225,7 @@ import frc.robot.subsystems.*;
         shooterTimer.restart();
       }
       System.out.println(shooterTimer.get());
-    } else if (Shooter.getShooterSpeed() > 0) {
+    } else if (Shooter.getShooterSpeed() < 0) {
       Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed());
     } else {
       Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, 0);
