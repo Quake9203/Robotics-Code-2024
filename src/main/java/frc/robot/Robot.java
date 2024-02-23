@@ -136,8 +136,12 @@ import frc.robot.subsystems.*;
         } else if (matchTime1 <= 1.5) {
           Shooter.shooterTalonPrimary.set(ControlMode.PercentOutput, 1);
           Shooter.shooterTalonSecondary.set(ControlMode.PercentOutput, .5);
+        } else if (matchTime1 <= 1.52) {
+          Shooter.shooterTalonPrimary.set(ControlMode.PercentOutput, 0);
+          Shooter.shooterTalonSecondary.set(ControlMode.PercentOutput, 0);
+          TankDrive.drive.tankDrive(-0.4, 0.415); 
         } else if (matchTime1 <= 3.0) {
-          TankDrive.drive.tankDrive(0.4, 0.4);    
+          TankDrive.drive.tankDrive(-0.4, 0.415);
         }
 //         // Put custom auto code here
 //         final double matchTime1 = autoTimer.get();
@@ -218,8 +222,8 @@ import frc.robot.subsystems.*;
     Shooter.shooterTalonPrimary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed());
     if (Shooter.getShooterSpeed() > 0) {
       if (shooterTimer.get() > 0) {
-        if(shooterTimer.get() > 0.6) {
-          Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed() * 0.75);
+        if(shooterTimer.get() > 1) {
+          Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed());
         }
       } else {
         shooterTimer.restart();

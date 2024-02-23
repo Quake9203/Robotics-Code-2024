@@ -19,7 +19,7 @@ public class Shooter {
         if (Math.abs(OI.GetXboxRightTrigger()) > deadzone) { // right trigger
             raw = 1;
         } else if (Math.abs(OI.GetXboxLeftTrigger()) > deadzone) {
-            raw = -0.25;
+            raw = -0.4;
         } else {
             raw = 0;
         }
