@@ -60,6 +60,7 @@ import frc.robot.subsystems.*;
   * current code completely brakes the wheels (for balancing)
   */
   public void disabledPeriodic() {
+    // activate active braking
     Grabber.grabberTalon.set(0);
     TankDrive.drive.tankDrive(0, 0);
   }
@@ -78,8 +79,10 @@ import frc.robot.subsystems.*;
     frc.robot.subsystems.TankDrive.DrivetrainSetup();
     Shooter.shooterTalonPrimary.configFactoryDefault();
     Shooter.shooterTalonSecondary.configFactoryDefault();
-    Shooter.shooterTalonPrimary.configContinuousCurrentLimit(70);
-    Shooter.shooterTalonSecondary.configContinuousCurrentLimit(70);
+    Shooter.shooterTalonPrimary.configContinuousCurrentLimit(35); // hopefully this will help us get more power from the shooter
+    Shooter.shooterTalonSecondary.configContinuousCurrentLimit(35);
+    Climb.claw.configFactoryDefault();
+    Climb.claw.configContinuousCurrentLimit(3);
   }
 
   /**
@@ -224,7 +227,7 @@ import frc.robot.subsystems.*;
     Shooter.shooterTalonPrimary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed());
     if (Shooter.getShooterSpeed() > 0) {
       if (shooterTimer.get() > 0) {
-        if(shooterTimer.get() > 2) {
+        if(shooterTimer.get() > 2 ) {
           Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed());
         }
       } else {

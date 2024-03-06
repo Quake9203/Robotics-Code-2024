@@ -32,6 +32,7 @@ public class RobotMap {
     public static int shooterTalonPrimaryCAN = 6;
     public static int shooterTalonSecondaryCAN = 5;
     public static int grabberTalonCAN = 7;
+    public static int clawTalonCAN = 8;
 
 
 // below has always been zero, regardless of what else is plugged in
