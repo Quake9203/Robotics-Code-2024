@@ -31,7 +31,7 @@ public class TankDrive {
       rightTalonLeader.setInverted(false);
       rightTalonFollower.setInverted(InvertType.FollowMaster);
       
-      leftTalonLeader.setInverted(true);
+      leftTalonLeader.setInverted(false);
       leftTalonFollower.setInverted(InvertType.FollowMaster);
 
   }
@@ -44,7 +44,7 @@ public class TankDrive {
       if (OI.xbox.getRawButton(1)) {
         raw = Math.signum(OI.GetXboxLeftJoyY()) * Math.pow(OI.GetXboxLeftJoyY(), 2);
       } else {
-        raw = Math.signum(OI.GetXboxLeftJoyY()) * Math.pow(OI.GetXboxLeftJoyY(), 2) * 0.9;
+        raw = Math.signum(OI.GetXboxLeftJoyY()) * Math.pow(OI.GetXboxLeftJoyY(), 2) * 0.9; 
       }
 
       return -raw;

@@ -60,6 +60,7 @@ import frc.robot.subsystems.*;
   * current code completely brakes the wheels (for balancing)
   */
   public void disabledPeriodic() {
+    Grabber.grabberTalon.set(0);
     TankDrive.drive.tankDrive(0, 0);
   }
 
@@ -74,6 +75,11 @@ import frc.robot.subsystems.*;
     m_chooser.addOption("Center", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     CameraServer.startAutomaticCapture();
+    frc.robot.subsystems.TankDrive.DrivetrainSetup();
+    Shooter.shooterTalonPrimary.configFactoryDefault();
+    Shooter.shooterTalonSecondary.configFactoryDefault();
+    Shooter.shooterTalonPrimary.configContinuousCurrentLimit(70);
+    Shooter.shooterTalonSecondary.configContinuousCurrentLimit(70);
   }
 
   /**
@@ -116,8 +122,6 @@ import frc.robot.subsystems.*;
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
     autoTimer.start();
-
-    // frc.robot.subsystems.TankDrive.DrivetrainSetup();
   }
 
   /**
@@ -130,19 +134,6 @@ import frc.robot.subsystems.*;
    // use autoSelected
     switch (m_autoSelected) {
       case kCustomAuto:
-        final double matchTime1 = autoTimer.get();
-        if (matchTime1 <= 1) {
-          Shooter.shooterTalonPrimary.set(ControlMode.PercentOutput, 1);
-        } else if (matchTime1 <= 1.5) {
-          Shooter.shooterTalonPrimary.set(ControlMode.PercentOutput, 1);
-          Shooter.shooterTalonSecondary.set(ControlMode.PercentOutput, .5);
-        } else if (matchTime1 <= 1.52) {
-          Shooter.shooterTalonPrimary.set(ControlMode.PercentOutput, 0);
-          Shooter.shooterTalonSecondary.set(ControlMode.PercentOutput, 0);
-          TankDrive.drive.tankDrive(-0.4, 0.415); 
-        } else if (matchTime1 <= 3.0) {
-          TankDrive.drive.tankDrive(-0.4, 0.415);
-        }
 //         // Put custom auto code here
 //         final double matchTime1 = autoTimer.get();
 //         double leftAutoSpeedClimb = 0.6695;
@@ -182,6 +173,17 @@ import frc.robot.subsystems.*;
 //         break;
       case kDefaultAuto:
       default:
+      final double matchTime1 = autoTimer.get();
+      if (matchTime1 <= 1) {
+        Shooter.shooterTalonPrimary.set(ControlMode.PercentOutput, 1);
+      } else if (matchTime1 <= 1.5) {
+        Shooter.shooterTalonPrimary.set(ControlMode.PercentOutput, 1);
+        Shooter.shooterTalonSecondary.set(ControlMode.PercentOutput, 1); 
+      } else if (matchTime1 <= 5.5) {
+        Shooter.shooterTalonPrimary.set(ControlMode.PercentOutput, 0);
+        Shooter.shooterTalonSecondary.set(ControlMode.PercentOutput, 0);
+        TankDrive.drive.tankDrive(-0.4, 0.415);
+      }
         // // Put default auto code here
         // final double matchTime = autoTimer.get();
         // double leftAutoSpeed = 0.515;
@@ -222,7 +224,7 @@ import frc.robot.subsystems.*;
     Shooter.shooterTalonPrimary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed());
     if (Shooter.getShooterSpeed() > 0) {
       if (shooterTimer.get() > 0) {
-        if(shooterTimer.get() > 1) {
+        if(shooterTimer.get() > 2) {
           Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed());
         }
       } else {
