@@ -242,6 +242,7 @@ import frc.robot.subsystems.*;
     }
 
     Grabber.grabberTalon.set(TalonSRXControlMode.PercentOutput, Grabber.getGrabberDirection());
+    Climb.claw.set(TalonSRXControlMode.PercentOutput, Climb.getClawSpeed());
 
   }
 
