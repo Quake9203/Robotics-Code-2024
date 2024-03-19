@@ -77,12 +77,9 @@ import frc.robot.subsystems.*;
     SmartDashboard.putData("Auto choices", m_chooser);
     CameraServer.startAutomaticCapture();
     frc.robot.subsystems.TankDrive.DrivetrainSetup();
-    Shooter.shooterTalonPrimary.configFactoryDefault();
-    Shooter.shooterTalonSecondary.configFactoryDefault();
-    Shooter.shooterTalonPrimary.configContinuousCurrentLimit(35); // hopefully this will help us get more power from the shooter
-    Shooter.shooterTalonSecondary.configContinuousCurrentLimit(35);
-    Climb.claw.configFactoryDefault();
-    Climb.claw.configContinuousCurrentLimit(3);
+    Climb.clawSetup();
+    Shooter.shooterSetup();
+
   }
 
   /**
@@ -229,6 +226,8 @@ import frc.robot.subsystems.*;
       if (shooterTimer.get() > 0) {
         if(shooterTimer.get() > 1.5 ) {
           Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed());
+        } else {
+          Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, -Shooter.getShooterSpeed());
         }
       } else {
         shooterTimer.restart();
@@ -242,7 +241,7 @@ import frc.robot.subsystems.*;
     }
 
     Grabber.grabberTalon.set(TalonSRXControlMode.PercentOutput, Grabber.getGrabberDirection());
-    Climb.claw.set(TalonSRXControlMode.PercentOutput, Climb.getClawSpeed());
+    Climb.leftClaw.set(TalonSRXControlMode.PercentOutput, Climb.getClawSpeed());
 
   }
 

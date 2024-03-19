@@ -12,10 +12,10 @@ public class RobotMap {
     */ 
 
     //Drivetrain
-    public static int rightTalonLeaderCAN = 1;
-    public static int rightTalonFollowerCAN = 2;
-    public static int leftTalonLeaderCAN = 3;
-    public static int leftTalonFollowerCAN = 4;
+    public static int rightTalonLeaderCAN = 10;
+    public static int rightTalonFollowerCAN = 9;
+    public static int leftTalonLeaderCAN = 5;
+    public static int leftTalonFollowerCAN = 6;
 
     //new 2020
     // public static int elevatorVictorMasterCAN = 8; //brake mode
@@ -29,10 +29,12 @@ public class RobotMap {
     // public static int armVictorCAN = 7;
 
     // new 2024
-    public static int shooterTalonPrimaryCAN = 6;
-    public static int shooterTalonSecondaryCAN = 5;
-    public static int grabberTalonCAN = 7;
-    public static int clawTalonCAN = 8;
+    public static int shooterTalonPrimaryCAN = 1;
+    public static int shooterTalonSecondaryCAN = 2;
+    public static int shooterTalonTertiaryCAN = 3;
+    public static int grabberTalonCAN = 4;
+    public static int rightClawTalonCAN = 7;
+    public static int leftClawTalonCAN = 8;
 
 
 // below has always been zero, regardless of what else is plugged in

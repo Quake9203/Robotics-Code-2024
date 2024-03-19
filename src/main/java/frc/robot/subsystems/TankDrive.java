@@ -24,7 +24,6 @@ public class TankDrive {
       leftTalonLeader.configFactoryDefault();
       leftTalonFollower.configFactoryDefault();
 
-
       rightTalonFollower.follow(rightTalonLeader);
       leftTalonFollower.follow(leftTalonLeader);
 
