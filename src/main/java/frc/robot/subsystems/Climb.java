@@ -19,13 +19,26 @@ public class Climb {
         
     }
 
+    public static int latentClawSpeed = 0;
+
     public static double getClawSpeed() {
-        if (OI.xbox.getBackButton()) {
-            return 1;
-        } else if (OI.xbox.getStartButton()) {
+        if (OI.xbox.getPOV() > -0.5 && OI.xbox.getPOV() < 10) {
+            latentClawSpeed = 0;
             return -1;
-        } else {
+        } else if (OI.xbox.getPOV() > 175 && OI.xbox.getPOV() < 185) {
+            latentClawSpeed = 0;
+            return 1;
+        } else if (OI.xbox.getYButtonPressed()) {
+            latentClawSpeed = -1;
+            return -1;
+        } else if (OI.xbox.getAButtonPressed()) {
+            latentClawSpeed = 1;
+            return 1;
+        } else if (OI.xbox.getXButtonPressed()) {
+            latentClawSpeed = 0;
             return 0;
+        } else {
+            return latentClawSpeed;
         }
     }
 }
