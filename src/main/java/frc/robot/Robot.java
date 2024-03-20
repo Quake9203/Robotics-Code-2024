@@ -226,8 +226,6 @@ import frc.robot.subsystems.*;
       if (shooterTimer.get() > 0) {
         if(shooterTimer.get() > 1.5 ) {
           Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed());
-        } else {
-          Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, -Shooter.getShooterSpeed());
         }
       } else {
         shooterTimer.restart();
@@ -235,6 +233,7 @@ import frc.robot.subsystems.*;
       System.out.println(shooterTimer.get());
     } else if (Shooter.getShooterSpeed() < 0) {
       Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, Shooter.getShooterSpeed());
+      shooterTimer.reset();
     } else {
       Shooter.shooterTalonSecondary.set(TalonSRXControlMode.PercentOutput, 0);
       shooterTimer.reset();
