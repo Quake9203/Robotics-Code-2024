@@ -73,13 +73,12 @@ import frc.robot.subsystems.*;
   public void robotInit() {
     gyro.reset();
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("Center", kCustomAuto);
+    m_chooser.addOption("No shot", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     CameraServer.startAutomaticCapture();
     frc.robot.subsystems.TankDrive.DrivetrainSetup();
     Climb.clawSetup();
     Shooter.shooterSetup();
-
   }
 
   /**
@@ -134,52 +133,24 @@ import frc.robot.subsystems.*;
    // use autoSelected
     switch (m_autoSelected) {
       case kCustomAuto:
-//         // Put custom auto code here
-//         final double matchTime1 = autoTimer.get();
-//         double leftAutoSpeedClimb = 0.6695;
-//         double rightAutoSpeedClimb = -0.65; // a constant speed diff between right and left motors
-        
-//         double leftAutoSpeed1 = 0.515;
-//         double rightAutoSpeed1 = -0.5; // a constant speed diff between right and left motors
-//         double yaw = gyro.getAngle();
-//         double cmdYaw = yaw * 0.05;
-
-// // Gyro balancing code. Feedback loop. A is a parameter of the feedback
-//         if (matchTime1 <= 1.9) {
-//           TankDrive.drive.tankDrive(leftAutoSpeedClimb - cmdYaw, rightAutoSpeedClimb - cmdYaw);
-//         } else if (matchTime1 <= 4.3) {
-//           TankDrive.drive.tankDrive(leftAutoSpeed1 - cmdYaw, rightAutoSpeed1 - cmdYaw);
-//         } else {
-//           double a = 0.85;
-//           if (matchTime1 >= 8.5) {
-//             a = 0.88;
-//           }
-//           double ay = oldGyro * a + accel.getY() * (1 - a);
-
-//           oldGyro = ay;
-//           double cmd = -ay * 2.7;
-//           double limit = 0.55;
-//           if (matchTime1 >= 9) {
-//             limit = 0.3;
-//           }
-          
-//           if (cmd > limit) {
-//             cmd = limit;
-//           } else if (cmd < -limit) {
-//             cmd = -limit;
-//           }
-//           TankDrive.drive.tankDrive(cmd, -cmd);
-//         }
-//         break;
+      final double matchTime2 = autoTimer.get();
+      if (matchTime2 <= 4) {
+        TankDrive.drive.tankDrive(-0.4, 0.415);
+      }
       case kDefaultAuto:
       default:
       final double matchTime1 = autoTimer.get();
-      if (matchTime1 <= 1) {
+      if (matchTime1 <= 0.3) {
         Shooter.shooterTalonPrimary.set(ControlMode.PercentOutput, 1);
-      } else if (matchTime1 <= 1.5) {
+        Shooter.shooterTalonSecondary.set(ControlMode.PercentOutput, -1);
+        TankDrive.drive.tankDrive(-0.4, 0.415);
+      } else if (matchTime1 <= 2.3) {
+        Shooter.shooterTalonPrimary.set(ControlMode.PercentOutput, 1);
+        Shooter.shooterTalonSecondary.set(ControlMode.PercentOutput, 0);
+      } else if (matchTime1 <= 2.8) {
         Shooter.shooterTalonPrimary.set(ControlMode.PercentOutput, 1);
         Shooter.shooterTalonSecondary.set(ControlMode.PercentOutput, 1); 
-      } else if (matchTime1 <= 5.5) {
+      } else if (matchTime1 <= 6.8) {
         Shooter.shooterTalonPrimary.set(ControlMode.PercentOutput, 0);
         Shooter.shooterTalonSecondary.set(ControlMode.PercentOutput, 0);
         TankDrive.drive.tankDrive(-0.4, 0.415);
